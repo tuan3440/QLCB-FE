@@ -1,0 +1,66 @@
+<p-card>
+    <ng-template pTemplate="header">
+        <h5>Tìm kiếm danh mục</h5>
+    </ng-template>
+    <div class="row">
+        <div class="col-4 form-group">
+            <div>
+                <label for="">Mã code</label>
+                <span class="p-float-label">
+                    <input type="text" pInputText class="p-inputtext-LG"  placeholder="code" [(ngModel)]="paramSearch.code" (change)="paramSearch.code=paramSearch.code.trim()">
+                </span>
+                <!-- <input type="text" pInputText class="p-inputtext-lg"  placeholder="Large"/> -->
+            </div>
+        </div>
+        <div class="col-4 form-group">
+            <div>
+                <label for="">Tên danh mục</label>
+                <span class="p-float-label">
+                    <input type="text" pInputText class="p-inputtext-LG"  placeholder="tên danh mục" [(ngModel)]="paramSearch.name" (change)="paramSearch.name=paramSearch.name.trim()">
+                </span>
+                <!-- <input type="text" pInputText class="p-inputtext-lg"  placeholder="Large"/> -->
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <div style="display: flex; justify-content: center;">
+            <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search(0)"></p-button>
+        </div>
+    </ng-template>
+</p-card>
+<div class="card">
+    <div style="display: flex; justify-content: space-between; padding: 20px 30px;">
+        <h5>Danh mục</h5>
+        <p-button label="Thêm mới" icon="pi pi-plus" iconPos="right"></p-button>
+    </div>
+    <p-table 
+            [value]="cats"
+            [paginator]="true"
+            [rows]="11"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [resizableColumns]="true"
+     >
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id" pResizableColumn>id <p-sortIcon field="code"></p-sortIcon></th>
+                <th pSortableColumn="code" pResizableColumn>Mã <p-sortIcon field="code"></p-sortIcon></th>
+                <th pSortableColumn="name" pResizableColumn>Tên danh mục <p-sortIcon field="name"></p-sortIcon></th>
+                <th pResizableColumn>Mô tả</th>
+                <th pResizableColumn>Thao tác</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-cat>
+            <tr>
+                <td>{{cat.id}}</td>
+                <td>{{cat.code}}</td>
+                <td>{{cat.name}}</td>
+                <td>{{cat.description}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(product)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

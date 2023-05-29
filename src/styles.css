@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+.p-inputtext {
+    width: 100%;
+}
+
+:host ::ng-deep .p-card {
+    padding: 20px;
+}
