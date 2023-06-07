@@ -1,0 +1,26 @@
+<p-card [style]="{'width': '100%'}">
+    <form [formGroup]="configForm">
+        <div class="row">
+            <div class="col-lg-4 form-group">
+                <label for="">Mã code</label>
+                <input type="text" pInputText placeholder="Mã code" formControlName="code"/>
+                <p *ngIf="code.touched && code?.errors?.required">Required</p>
+            </div>
+            <div class="col-lg-4 form-group">
+                <label for="">Tên danh mục</label>
+                <input type="text" pInputText placeholder="Tên danh mục" formControlName="name"/>
+                <p *ngIf="name.touched && name?.errors?.required">Required</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 form-group">
+                <label for="">Mô tả</label>
+                <textarea rows="5" cols="30" pInputTextarea autoResize="autoResize" formControlName="description" style="width: 100%;"></textarea>
+            </div>
+        </div>
+    </form>
+    <div style="display: flex; justify-content: space-between; width: 200px; margin: auto; margin-top: 10px;">
+        <button pButton pRipple label="Save" icon="pi pi-check" (click)="save()" [disabled]="this.configForm.invalid"></button>
+        <button pButton pRipple label="Cancel" icon="pi pi-times" (click)="cancel()"></button>
+    </div>
+</p-card>

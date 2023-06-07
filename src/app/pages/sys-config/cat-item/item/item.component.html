@@ -1,0 +1,20 @@
+<p-card [style]="{'width': '100%'}">
+    <form>
+        <div class="row">
+            <div class="col-lg-4 form-group">
+                <label for="">Mã code</label>
+                <input type="text" pInputText placeholder="Mã code" [(ngModel)]="item.code" name="code"/>
+                <!-- <p *ngIf="item.code.touched && code?.errors?.required">Required</p> -->
+            </div>
+            <div class="col-lg-4 form-group">
+                <label for="">Tên danh mục</label>
+                <input type="text" pInputText placeholder="Tên danh mục" [(ngModel)]="item.name" name="name"/>
+                <!-- <p *ngIf="name.touched && name?.errors?.required">Required</p> -->
+            </div>
+        </div>
+    </form>
+    <div style="display: flex; justify-content: space-between; width: 200px; margin: auto; margin-top: 10px;">
+        <button pButton pRipple label="Save" icon="pi pi-check" (click)="save()" ></button>
+        <button pButton pRipple label="Cancel" icon="pi pi-times" (click)="cancel()"></button>
+    </div>
+</p-card>

@@ -14,6 +14,13 @@ const routes: Routes = [
             import("./sys-config/sys-config.module").then(
               (m) => m.SysConfigModule
             )
+        },
+        {
+          path: "employee",
+          loadChildren: () =>
+            import("./employee/employee.module").then(
+              (m) => m.EmployeeModule
+            )
         }
       ]
     }

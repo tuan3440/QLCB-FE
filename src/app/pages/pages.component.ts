@@ -12,8 +12,22 @@ import {MenuItem} from 'primeng-lts/api';
     ngOnInit() {
         this.items = [{
             label: 'Cấu hình hệ thống',
+            icon: 'pi pi-cog',
+            url: 'pages/sys-config/cat'
+        },
+        {
+            label: 'Quản lí danh sách cc/cv',
             items: [
-                {label: 'Danh mục dữ liệu', url: 'pages/sys-config/cat'}
+                {
+                    label: 'Danh sách cc/cv',
+                    icon: 'pi pi-book',
+                    url: 'pages/employees'
+                },
+                {
+                    label: 'Thêm mới cc/cv',
+                    icon: 'pi pi-user-edit',
+                    url: 'pages/employees/add'
+                }
             ]
         }]
     }

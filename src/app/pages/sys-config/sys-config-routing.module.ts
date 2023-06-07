@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { CatComponent } from "./cat/cat.component";
+import { CatItemListComponent } from "./cat-item/cat-item-list.component";
 
 
 const routes: Routes = [{
@@ -9,6 +10,10 @@ const routes: Routes = [{
       {
         path: 'cat',
         component: CatComponent,
+      },
+      {
+        path: 'cat-items/:id',
+        component: CatItemListComponent
       }
     ]
 }];

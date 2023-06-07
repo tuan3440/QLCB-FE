@@ -1,6 +1,6 @@
 <p-card>
     <ng-template pTemplate="header">
-        <h5 class="title" style="padding: 20px; border-bottom: 1px solid rgba(0, 0, 0, 0.175);;">Tìm kiếm danh mục</h5>
+        <h5 class="title" style="padding: 20px; border-bottom: 1px solid rgba(0, 0, 0, 0.175);;">{{catName}}</h5>
     </ng-template>
     <div class="row">
         <div class="col-4 form-group">
@@ -24,7 +24,7 @@
     </div>
     <ng-template pTemplate="footer">
         <div style="display: flex; justify-content: center;">
-            <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search(0)"></p-button>
+            <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
         </div>
     </ng-template>
 </p-card>
@@ -34,7 +34,7 @@
         <p-button label="Thêm mới" icon="pi pi-plus" iconPos="right" (onClick)="new()"></p-button>
     </div>
     <p-table 
-            [value]="cats"
+            [value]="catItems"
             [paginator]="true"
             [rows]="11"
             [showCurrentPageReport]="true"
@@ -50,16 +50,15 @@
                 <th pResizableColumn style="text-align: center;">Thao tác</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-cat>
+        <ng-template pTemplate="body" let-catItem>
             <tr>
-                <td>{{cat.id}}</td>
-                <td>{{cat.code}}</td>
-                <td>{{cat.name}}</td>
-                <td>{{cat.description}}</td>
+                <td>{{catItem.catId}}</td>
+                <td>{{catItem.code}}</td>
+                <td>{{catItem.name}}</td>
+                <td>{{catItem.description}}</td>
                 <td style="display: flex; justify-content: space-evenly;">
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="edit(cat)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="delete(cat.id)"></button>
-                    <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-text" (click)="view(cat.id)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="edit(catItem)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="delete(catItem.catId)"></button>
                 </td>
             </tr>
         </ng-template>

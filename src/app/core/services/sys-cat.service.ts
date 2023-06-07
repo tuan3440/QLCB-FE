@@ -18,6 +18,12 @@ export class SysCatService {
         });
     }
 
+    public getCat(id): Observable<any> {
+      return this.http.get<any>(`${environment.apiUrl}/cat/findById/${id}`, {
+      observe: 'response'
+      });
+  }
+
     public insert(body?: any): Observable<any> {
         return this.http.post<any>(`${environment.apiUrl}/cat/insert`, body, {
           observe: 'response'
