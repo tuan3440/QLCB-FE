@@ -4,15 +4,27 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
     {
         path: 'personal/:id',
-        loadChildren: './personal/personal.module#PersonalModule'
+        loadChildren: () => 
+            import("./personal/personal.module").then(
+                (m) => m.PersonalModule
+            )
+        // loadChildren: './personal/personal.module#PersonalModule'
     },
     {
         path: 'update-employee',
-        loadChildren: './update-employee/update-employee.module#UpdateEmployeeModule'
+        loadChildren: () => 
+            import("./update-employee/update-employee.module").then(
+                (m) => m.UpdateEmployeeModule
+            )
+        // loadChildren: './update-employee/update-employee.module#UpdateEmployeeModule'
     },
     {
         path: 'create-employee',
-        loadChildren: './create-employee/create-employee.module#CreateEmployeeModule'
+        loadChildren: () => 
+            import("./create-employee/create-employee.module").then(
+                (m) => m.CreateEmployeeModule
+            )
+        // loadChildren: './create-employee/create-employee.module#CreateEmployeeModule'
     }
 ];
 

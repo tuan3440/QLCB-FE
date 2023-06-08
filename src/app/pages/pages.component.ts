@@ -6,29 +6,29 @@ import {MenuItem} from 'primeng-lts/api';
     styleUrls: ["pages.component.scss"],
     templateUrl: "./pages.component.html"
   })
-  export class PagesComponent {
-    items: MenuItem[];
+export class PagesComponent {
+items: MenuItem[];
 
-    ngOnInit() {
-        this.items = [{
-            label: 'Cấu hình hệ thống',
-            icon: 'pi pi-cog',
-            url: 'pages/sys-config/cat'
-        },
-        {
-            label: 'Quản lí danh sách cc/cv',
-            items: [
-                {
-                    label: 'Danh sách cc/cv',
-                    icon: 'pi pi-book',
-                    url: 'pages/employees'
-                },
-                {
-                    label: 'Thêm mới cc/cv',
-                    icon: 'pi pi-user-edit',
-                    url: 'pages/employees/add'
-                }
-            ]
-        }]
-    }
-  }
+ngOnInit() {
+    this.items = [{
+        label: 'Cấu hình hệ thống',
+        icon: 'pi pi-cog',
+        url: 'pages/sys-config/cat'
+    },
+    {
+        label: 'Quản lí danh sách cc/cv',
+        items: [
+            {
+                label: 'Danh sách cc/cv',
+                icon: 'pi pi-book',
+                url: 'pages/employee/update-employee'
+            },
+            {
+                label: 'Thêm mới cc/cv',
+                icon: 'pi pi-user-edit',
+                url: 'pages/employee/create-employee'
+            }
+        ]
+    }]
+}
+}
