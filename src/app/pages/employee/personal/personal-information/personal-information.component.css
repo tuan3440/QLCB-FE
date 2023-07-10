@@ -31,3 +31,13 @@
     left: 47px;
     background-color: darkgrey;
 }
+
+.download {
+    position: absolute;
+    top: 45px;
+    left: 100px;
+}
+
+:host ::ng-deep .no-header .p-panel-header {
+    display: none !important;
+}

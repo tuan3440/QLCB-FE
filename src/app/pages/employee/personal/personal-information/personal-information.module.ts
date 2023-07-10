@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CreateEmployeeRoutingModule } from './create-employee-routing.module';
-import { CreateEmployeeComponent } from './create-employee.component';
 import {PanelModule} from 'primeng-lts/panel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng-lts/inputtext';
@@ -12,12 +10,14 @@ import {DropdownModule} from 'primeng-lts/dropdown';
 import {ButtonModule} from 'primeng-lts/button';
 import {ConfirmationService, MessageService} from 'primeng-lts/api';
 import {ToastModule} from 'primeng-lts/toast';
+import { PersonalInformationRouting } from './personal-information-routing.module';
+import { PersonalInformationComponent } from './personal-information.component';
 
 @NgModule({
-  declarations: [CreateEmployeeComponent],
+  declarations: [PersonalInformationComponent],
   imports: [
     CommonModule,
-    CreateEmployeeRoutingModule,
+    PersonalInformationRouting,
     ReactiveFormsModule,
     FormsModule,
     PanelModule,
@@ -30,4 +30,4 @@ import {ToastModule} from 'primeng-lts/toast';
   ],
   providers: [ConfirmationService, MessageService]
 })
-export class CreateEmployeeModule { }
+export class PersonalInformationModule { }

@@ -1,0 +1,118 @@
+<p-card>
+    <ng-template pTemplate="header">
+        <h5 class="title" style="padding: 20px; border-bottom: 1px solid rgba(0, 0, 0, 0.175);;">Tìm kiếm danh mục</h5>
+    </ng-template>
+    <form action="" [formGroup]="formSearch">
+        <div class="row">
+            <div class="col-4 form-group">
+                <div>
+                    <label for="">Họ và tên</label>
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="p-inputtext-LG"  placeholder="name" formControlName="name">
+                    </span>
+                    <!-- <input type="text" pInputText class="p-inputtext-lg"  placeholder="Large"/> -->
+                </div>
+            </div>
+            <div class="col-4 form-group">
+                <div>
+                    <label for="">CMND</label>
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="p-inputtext-LG"  placeholder="cmnd" formControlName="codeId"/>
+                    </span>
+                    <!-- <input type="text" pInputText class="p-inputtext-lg"  placeholder="Large"/> -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 form-group">
+                <div>
+                    <label for="">Số điện thoai</label>
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="p-inputtext-LG"  placeholder="sđt" formControlName="phone">
+                    </span>
+                    <!-- <input type="text" pInputText class="p-inputtext-lg"  placeholder="Large"/> -->
+                </div>
+            </div>
+            <div class="col-4 form-group">
+                <div>
+                    <label for="">Email</label>
+                    <span class="p-float-label">
+                        <input type="text" pInputText class="p-inputtext-LG"  placeholder="email" formControlName="email"/>
+                    </span>
+                    <!-- <input type="text" pInputText class="p-inputtext-lg"  placeholder="Large"/> -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 form-group p-field p-md-4">
+                <label for="icon">Ngày sinh từ ngày</label>
+                <!-- <p-calendar formControlName="birthDay" [showIcon]="true" inputId="icon" dateFormat="dd.mm.yy"></p-calendar> -->
+                <p-calendar (ngModelChange)="checkValidate('dateBirthFrom')" formControlName="dateBirthFrom"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators" dateFormat="dd.mm.yy"></p-calendar>
+                <p *ngIf="errDateBirthFrom" style="color: red;">Not After</p>
+            </div>
+            <div class="col-4 form-group p-field p-md-4">
+                <label for="icon">Ngày sinh đến ngày</label>
+                <!-- <p-calendar formControlName="birthDay" [showIcon]="true" inputId="icon" dateFormat="dd.mm.yy"></p-calendar> -->
+                <p-calendar (ngModelChange)="checkValidate('dateBirthTo')" formControlName="dateBirthTo"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators" dateFormat="dd.mm.yy"></p-calendar>
+                <p *ngIf="errDateBirthTo" style="color: red;">Not Before</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="custom-style-radio">
+                <p style="text-align: center;">Giới tính</p>
+                <div *ngFor="let g of genders" class="p-field-checkbox">
+                    <p-radioButton [inputId]="g.value" [value]="g.value" formControlName="gender"></p-radioButton>
+                    <label [for]="g.value">{{g.title}}</label>
+                </div>
+            </div>
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <div style="display: flex; justify-content: center;">
+            <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
+        </div>
+    </ng-template>
+</p-card>
+<div class="card">
+    <div style="display: flex; justify-content: space-between; padding: 20px 30px;">
+        <h5>Danh sách CC/VC</h5>
+    </div>
+    <p-table 
+            [value]="employees"
+            [paginator]="true"
+            [rows]="11"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [resizableColumns]="true"
+     >
+        <ng-template pTemplate="header">
+            <tr>
+                <th>STT</th>
+                <th>CMND</th>
+                <th>Họ và tên</th>
+                <th>Ngày sinh</th>
+                <th>Giới tính</th>
+                <th>Số điện thoại</th>
+                <th>Tổ chức</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-employee let-index="rowIndex+1">
+            <tr>
+                <td>{{index}}</td>
+                <td>{{employee.codeId}}</td>
+                <td>{{employee.name}}</td>
+                <td>{{employee.birthDay | date:'mediumDate'}}</td>
+                <td>{{employee.gender === 1 ? 'Nam' : 'Nữ'}}</td>
+                <td>{{employee.phone}}</td>
+                <td>{{employee.organization}}</td>
+                <td style="display: flex; justify-content: space-evenly;">
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="edit(employee.id)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="delete(employee.id)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-toast></p-toast>

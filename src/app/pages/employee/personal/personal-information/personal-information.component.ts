@@ -1,14 +1,16 @@
-import { Component, HostListener, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { MessageService } from "primeng-lts/api";
-import { EmployeeService } from "src/app/core/services";
-import { checkNumberic } from '../../../shared/validator';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng-lts/api';
+import { EmployeeService } from 'src/app/core/services';
+import { EmployeeResolver } from 'src/app/core/services/employee.resolve';
+
 @Component({
-    selector: "app-create-employee",
-    styleUrls: ["create-employee.component.css"],
-    templateUrl: "./create-employee.component.html"
-  })
-export class CreateEmployeeComponent implements OnInit {
+  selector: 'app-personal-info',
+  templateUrl: './personal-information.component.html',
+  styleUrls: ['./personal-information.component.css']
+})
+export class PersonalInformationComponent implements OnInit {
 
     formSave: FormGroup;
     genders: any[] = [{title: 'Nam', value: 1}, {title: 'Nữ', value: 0}];
@@ -20,20 +22,23 @@ export class CreateEmployeeComponent implements OnInit {
     ALLOW_FILE_EXT = ['jpg', 'png', 'jpeg'];
     imgAsset: any;
     imgAssetRaw: any;
+    employeeId: any;
+    imgAssetDelete: any;
     constructor(
       private messageService: MessageService,
-      private employeeService: EmployeeService
+      private employeeService: EmployeeService,
+      private employeeResolve: EmployeeResolver,
+      private router: Router
     ) {
-
+       this.initForm();
     }
 
-    ngOnInit(): void {
+    initForm() {
       this.formSave = new FormGroup({
         name: new FormControl(null, [Validators.required]),
         codeId: new FormControl(null, [
           Validators.required,
-          Validators.pattern("^[0-9]*$"),
-          checkNumberic()
+          Validators.pattern("^[0-9]*$")
         ]),
         birthDay: new FormControl(null),
         phone: new FormControl(null, [Validators.required]),
@@ -46,16 +51,50 @@ export class CreateEmployeeComponent implements OnInit {
       })
     }
 
+    ngOnInit(): void {
+      this.employeeResolve.EMPLOYEE_ID.subscribe(employeeId => {
+        if(employeeId) {
+          this.employeeId = employeeId;
+          this.employeeService.findById(employeeId).subscribe(res => {
+            console.log(res)
+            this.formSave.patchValue({
+              name: res.name,
+              codeId: res.codeId,
+              birthDay: new Date(res.birthDay),
+              phone: res.phone,
+              email: res.email,
+              gender: res.gender,
+              address: res.address,
+              cityId: res.cityId,
+              job: res.job,
+              organization: res.organization,
+            })
+            this.imgAsset = {
+              src : this.employeeService.createImageSrc('/file-managements/view?id=' + res.avatarId),
+              url : this.employeeService.createImageSrc('/file-managements/download?id=' + res.avatarId),
+              id : res.avatarId
+            }
+          })          
+        }
+       })
+    }
+
     save() {
       this.formSave.markAllAsTouched();
       if (this.formSave.invalid) {
         return;
       }
-      console.log('â', this.formSave.value);
       const formData = new FormData();
-      formData.append("imgAsset", this.imgAssetRaw);
-      formData.append("employeeDTOString", JSON.stringify(this.formSave.value));
-      this.employeeService.insert(formData).subscribe(res => {
+      if (this.imgAssetRaw) {
+        formData.append("imgAsset", this.imgAssetRaw);
+      }
+      if (this.imgAssetDelete) {
+        formData.append("imgAssetDel", JSON.stringify(this.imgAssetDelete));
+
+      }
+      const updateEmployee = {...this.formSave.value, id: this.employeeId}
+      formData.append("employeeDTOString", JSON.stringify(updateEmployee));
+      this.employeeService.update(formData).subscribe(res => {
         if (res) {
           this.messageService.add({severity:'info', summary:'Theem', detail:'Them moi thanh cong'})
         }
@@ -67,7 +106,7 @@ export class CreateEmployeeComponent implements OnInit {
     }
 
     cancel() {
-
+        this.router.navigateByUrl('pages/employee/update-employee');
     }
 
     imgChange(event) {
@@ -111,8 +150,9 @@ export class CreateEmployeeComponent implements OnInit {
       }
     }
 
-    delImg() {
+    delImg(id) {
       this.imgAsset = null;
+      this.imgAssetDelete = id;
     }
 
     @HostListener("dragover", ["$event"]) onDragOver(event: any) {

@@ -1,0 +1,4 @@
+
+:host ::ng-deep .row .custom-style-radio {
+    display: flex;
+}

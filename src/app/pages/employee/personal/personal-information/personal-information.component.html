@@ -1,11 +1,13 @@
-<p-panel header="Thêm mới CC/CV" style>
+<p-panel class="no-header">
     <form [formGroup]="formSave">
         <div class="row">
             <div draggable="true" class="image-ipload">
                 <div style="width: 100px; position: relative;">
                     <img width="100px" [src]="imgAsset ? imgAsset.src : '../../../../assets/images/unknown-user.png'"  style="object-fit: contain;"/>
-                    <span *ngIf="imgAsset" (click)="delImg()" class="trash"><span><i
+                    <span *ngIf="imgAsset" (click)="delImg(imgAsset.id)" class="trash"><span><i
                         class="pi pi-trash"></i></span></span>
+                    <a [href]="imgAsset.url" *ngIf="imgAsset" class="download"><span><i
+                        class="pi pi-arrow-down"></i></span></a>
                 </div>
             </div>
             <div class="d-flex justify-content-center" draggable="true" *ngIf="!imgAsset" >
